@@ -76,7 +76,13 @@ def log_frontmost():
 def get_chat_status():
     if 'Adium' in [p.name() for p in SYSTEM_EVENTS.processes()]:
         status = app('Adium').global_status()
-        return '%s -- %s' % (status.title(), status.status_message())
+        message = status.status_message()
+        title = status.title()
+        stype = status.status_type().name.title()
+        rettext = "%s (%s)" % (title, stype)
+        if message and message != title:
+            rettext -  "%s -- %s" % (rettext, message)
+        return rettext
     else:
         return None
 
