@@ -49,7 +49,7 @@ def log_frontmost():
         data['window'] = frontwin.name()
 
     if appname == 'Notational Velocity':
-        frontapp.menu_bars[0].menus['Edit'].menu_items['Copy URL'].click()
+        frontproc.menu_bars[0].menus['Edit'].menu_items['Copy URL'].click()
         data['file'] = get_clipboard_data()
 
     elif appname == 'Google Chrome':
