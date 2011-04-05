@@ -15,14 +15,18 @@ def watch(times=100, intvl=10):
             print 'done'
             return
 
-def log_frontmost():
-    frontapp = app(SYSTEM_EVENTS.processes[its.frontmost == True][0].name())
-    try:
-        appname = frontapp.name()
-    except:
-        appname = frontapp.__str__()
 
-    data = {'ts':time.time(), 'appname':appname, 'window':appname}
+def log_frontmost():
+    frontproc = SYSTEM_EVENTS.processes[its.frontmost == True][0]
+    scriptable = frontproc.has_scripting_terminology()
+    appname = frontproc.name()
+    if scriptable:
+        frontapp = app(frontproc.name())
+        appname = frontapp.name()
+
+    data = {'ts':time.time(), 'appname':appname, 'window':appname, 'status':get_chat_status()}
+
+    if not scriptable: return data
 
     try:
         frontwin = frontapp.active_window()
@@ -67,18 +71,24 @@ def log_frontmost():
             data['window'] = frontapp.active_chat.name()
         except:
             pass
-        try:
-            data['status'] = '%s -- %s' % (frontapp.global_status.title(), frontapp.global_status.status_message())
-        except:
-            pass
 
     print data
+
+
+def get_chat_status():
+    if 'Adium' in [p.name() for p in SYSTEM_EVENTS.processes()]:
+        status = app('Adium').global_status()
+        return '%s -- %s' % (status.title(), status.status_message())
+    else:
+        return ''
+
 
 def get_clipboard_data():
     p = Popen(['pbpaste'], stdout=PIPE)
     retcode = p.wait()
     data = p.stdout.read()
     return data
+
 
 if __name__ == '__main__':
     from optparse import OptionParser
