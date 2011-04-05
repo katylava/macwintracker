@@ -2,13 +2,19 @@
 
 from appscript import app, its
 import time
-from subprocess import call, Popen, PIPE
+from subprocess import Popen, PIPE
 
 SYSTEM_EVENTS = app(id="com.apple.systemEvents")
 
 def watch(times=100, intvl=10):
     for i in range(1, times):
-        log_frontmost()
+        try:
+            data = log_frontmost()
+            # instead of 'print', pipe to stdout
+            print data
+        except Exception as e:
+            # instead of 'print', pipe to stderr
+            print e
         try:
             time.sleep(intvl)
         except KeyboardInterrupt:
@@ -24,55 +30,41 @@ def log_frontmost():
         frontapp = app(frontproc.name())
         appname = frontapp.name()
 
-    data = {'ts':time.time(), 'appname':appname, 'window':appname, 'status':get_chat_status()}
+    data = {'ts':time.time(), 'appname':appname, 'window':appname, 'file':None, 'status':get_chat_status()}
 
     if not scriptable: return data
 
     try:
-        frontwin = frontapp.active_window()
+        frontwin = frontapp.active_window()[0]
     except:
         try:
-            frontwin = frontapp.windows[its.index==1]
+            frontwin = frontapp.windows[its.index==1][0]
         except:
             try:
-                frontwin = frontapp.windows[its.frontmost==True]
+                frontwin = frontapp.windows[its.frontmost==True][0]
             except:
                 frontwin = None
 
     if frontwin:
-        try:
-            data['window'] = frontwin.name()
-        except:
-            pass
+        data['window'] = frontwin.name()
 
     if appname == 'Notational Velocity':
-        try:
-            call('arch', '-i386', 'osascript', 'getNotationalVelocitySelection.scpt')
-            data['note'] = get_clipboard_data()
-        except:
-            pass
-    elif appname == 'Google Chrome':
-        try:
-            data['url'] = frontapp.windows[its.index==1].active_tab().URL()
-        except:
-            pass
-    elif appname == 'Microsoft Word':
-        try:
-            data['document'] = frontapp.active_document.path()
-        except:
-            pass
-    elif appname == 'Microsoft Excel':
-        try:
-            data['document'] = frontapp.active_workbook.path()
-        except:
-            pass
-    elif appname == 'Adium':
-        try:
-            data['window'] = frontapp.active_chat.name()
-        except:
-            pass
+        frontapp.menu_bars[0].menus['Edit'].menu_items['Copy URL'].click()
+        data['file'] = get_clipboard_data()
 
-    print data
+    elif appname == 'Google Chrome':
+        data['file'] = frontwin.active_tab().URL()
+
+    elif appname == 'Microsoft Word':
+        data['file'] = frontapp.active_document.path()
+
+    elif appname == 'Microsoft Excel':
+        data['file'] = frontapp.active_workbook.path()
+
+    elif appname == 'Adium':
+        data['file'] = frontapp.active_chat.name()
+
+    return data
 
 
 def get_chat_status():
@@ -80,7 +72,7 @@ def get_chat_status():
         status = app('Adium').global_status()
         return '%s -- %s' % (status.title(), status.status_message())
     else:
-        return ''
+        return None
 
 
 def get_clipboard_data():
