@@ -29,7 +29,7 @@ def log_frontmost():
         frontapp = app(frontproc.name())
         appname = frontapp.name()
 
-    data = {'ts':time.time(), 'appname':appname, 'window':appname, 'file':None, 'status':get_chat_status()}
+    data = {'ts':time.time(), 'appname':appname, 'window':appname, 'status':get_chat_status()}
 
     if not scriptable: return data
 
