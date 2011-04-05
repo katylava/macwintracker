@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from appscript import app, its
 import time
+import simplejson as json
+from appscript import app, its
 from subprocess import Popen, PIPE
 
 SYSTEM_EVENTS = app(id="com.apple.systemEvents")
@@ -11,7 +12,7 @@ def watch(times=100, intvl=10):
         try:
             data = log_frontmost()
             # instead of 'print', pipe to stdout
-            print data
+            json.dumps(data)
         except Exception as e:
             # instead of 'print', pipe to stderr
             print e
