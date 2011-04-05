@@ -5,6 +5,8 @@ import simplejson as json
 from appscript import app, its
 from subprocess import Popen, PIPE
 
+SYSTEM_EVENTS = app(id="com.apple.systemEvents")
+
 def watch(times=100, intvl=10):
     for i in range(1, times):
         try:
@@ -20,7 +22,6 @@ def watch(times=100, intvl=10):
 
 
 def log_frontmost():
-    SYSTEM_EVENTS = app(id="com.apple.systemEvents")
     frontproc = SYSTEM_EVENTS.processes[its.frontmost == True][0]
     scriptable = frontproc.has_scripting_terminology()
     appname = frontproc.name()
