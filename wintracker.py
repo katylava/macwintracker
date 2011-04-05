@@ -70,6 +70,9 @@ def log_frontmost():
     elif appname == 'LaunchBar':
         data['selection'] = frontapp.selection_as_text()
 
+    elif appname == 'Terminal':
+        data['process'] = frontwin.selected_tab.processes()[-1]
+
     return data
 
 
