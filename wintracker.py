@@ -61,6 +61,9 @@ def log_frontmost():
     elif appname == 'Microsoft Excel':
         data['file'] = frontapp.active_workbook.path()
 
+    elif appname == 'Microsoft PowerPoint':
+        data['file'] = '%s:%s' % (frontapp.active_presentation.path(), data['window'])
+
     elif appname == 'Adium':
         data['file'] = frontapp.active_chat.name()
 
