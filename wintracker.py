@@ -12,7 +12,7 @@ def watch(times=100, intvl=10):
         try:
             time.sleep(intvl)
         except KeyboardInterrupt:
-            print 'done watching frontmost app'
+            print 'done'
             return
 
 def log_frontmost():
@@ -22,7 +22,7 @@ def log_frontmost():
     except:
         appname = frontapp.__str__()
 
-    data = {'ts':time.time(), 'appname':appname, 'window':''}
+    data = {'ts':time.time(), 'appname':appname, 'window':appname}
 
     try:
         frontwin = frontapp.active_window()
@@ -36,7 +36,10 @@ def log_frontmost():
                 frontwin = None
 
     if frontwin:
-        data['window'] = frontwin.name()
+        try:
+            data['window'] = frontwin.name()
+        except:
+            pass
 
     if appname == 'Notational Velocity':
         try:
@@ -82,5 +85,4 @@ if __name__ == '__main__':
     parser = OptionParser(usage="usage: %prog <times> <interval>")
     (options, args) = parser.parse_args()
     watch(*[int(arg) for arg in args])
-
 
