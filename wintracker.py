@@ -11,7 +11,7 @@ def watch(times=100, intvl=10):
     for i in range(1, times):
         try:
             data = log_frontmost()
-            json.dumps(data)
+            print json.dumps(data)
         except Exception as e:
             print >>sys.stderr, 'ERROR:', e
         try:
@@ -33,26 +33,27 @@ def log_frontmost():
 
     if not scriptable: return data
 
+    frontwin = None
     try:
-        frontwin = frontapp.active_window()[0]
+        frontwin = frontapp.active_window()[0].get()
     except:
         try:
-            frontwin = frontapp.windows[its.index==1][0]
+            frontwin = frontapp.windows[its.index==1][0].get()
         except:
             try:
-                frontwin = frontapp.windows[its.frontmost==True][0]
+                frontwin = frontapp.windows[its.frontmost==True][0].get()
             except:
-                frontwin = None
+                pass
 
     if frontwin:
         data['window'] = frontwin.name()
 
     if appname == 'Notational Velocity':
         frontproc.menu_bars[0].menus['Edit'].menu_items['Copy URL'].click()
-        data['file'] = get_clipboard_data()
+        data['url'] = get_clipboard_data()
 
     elif appname == 'Google Chrome':
-        data['file'] = frontwin.active_tab().URL()
+        data['url'] = frontwin.active_tab().URL()
 
     elif appname == 'Microsoft Word':
         data['file'] = frontapp.active_document.path()
@@ -64,7 +65,10 @@ def log_frontmost():
         data['file'] = '%s:%s' % (frontapp.active_presentation.path(), data['window'])
 
     elif appname == 'Adium':
-        data['file'] = frontapp.active_chat.name()
+        data['chat'] = frontapp.active_chat.name()
+
+    elif appname == 'LaunchBar':
+        data['selection'] = frontapp.selection_as_text()
 
     return data
 
