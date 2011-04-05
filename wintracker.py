@@ -1,21 +1,17 @@
 #!/usr/bin/env python
 
-import time
+import time, sys
 import simplejson as json
 from appscript import app, its
 from subprocess import Popen, PIPE
-
-SYSTEM_EVENTS = app(id="com.apple.systemEvents")
 
 def watch(times=100, intvl=10):
     for i in range(1, times):
         try:
             data = log_frontmost()
-            # instead of 'print', pipe to stdout
             json.dumps(data)
         except Exception as e:
-            # instead of 'print', pipe to stderr
-            print e
+            print >>sys.stderr, 'ERROR:', e
         try:
             time.sleep(intvl)
         except KeyboardInterrupt:
@@ -24,6 +20,7 @@ def watch(times=100, intvl=10):
 
 
 def log_frontmost():
+    SYSTEM_EVENTS = app(id="com.apple.systemEvents")
     frontproc = SYSTEM_EVENTS.processes[its.frontmost == True][0]
     scriptable = frontproc.has_scripting_terminology()
     appname = frontproc.name()
