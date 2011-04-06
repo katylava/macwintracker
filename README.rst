@@ -1,3 +1,7 @@
+*CURRENT NOT WORKING*
+This is up on github so I can get help making it work.
+
+
 Description
 ===========
 
@@ -10,8 +14,7 @@ which you can parse however you pleaseth.
 Installation
 ============
 
-Requires py-appscript and simplejson.
-
+Install:
     $ git clone ... ~/Library/Application\ Support/com.katylavallee.wintracker
     $ cd <clone>
     $ ./setup.sh <interval>
@@ -22,6 +25,7 @@ You can run setup.sh again to change it.
 To stop wintracker:
     $ launchctl unload ~/Library/LaunchAgents/com.katylavallee.wintracker
 
+Requires appscript.
 
 Consuming Output
 ================
