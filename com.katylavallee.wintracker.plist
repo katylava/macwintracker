@@ -16,9 +16,9 @@
       <string>{{PYTHONPATH}}</string>
     </dict>
     <key>StandardErrorPath</key>
-    <string>Users/{{USER}}/Library/Logs/com.katylavallee.wintracker/wintracker_err.log</string>
+    <string>/Users/{{USER}}/Library/Logs/com.katylavallee.wintracker/wintracker_err.log</string>
     <key>StandardOutPath</key>
-    <string>Users/{{USER}}/Library/Logs/com.katylavallee.wintracker/wintracker.log</string>
+    <string>/Users/{{USER}}/Library/Logs/com.katylavallee.wintracker/wintracker.log</string>
     <key>StartInterval</key>
     <integer>{{INTERVAL}}</integer>
   </dict>
