@@ -20,7 +20,7 @@ The active window will be logged every <interval> seconds.
 You can run setup.sh again to change it.
 
 To stop wintracker:
-    $ launchctl unload com.katylavallee.wintracker
+    $ launchctl unload ~/Library/LaunchAgents/com.katylavallee.wintracker
 
 
 Consuming Output
