@@ -1,9 +1,16 @@
 #!/usr/bin/env python
 
 import time, sys
-import simplejson as json
 from appscript import app, its
 from subprocess import Popen, PIPE
+
+try:
+    from django.utils import simplejson as json
+except ImportError:
+    try:
+        import simplejson as json
+    except ImportError:
+        import json
 
 SYSTEM_EVENTS = app(id="com.apple.systemEvents")
 
