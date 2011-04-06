@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
+  <dict>
     <key>label</key>
     <string>com.katylavallee.wintracker</string>
     <key>ProgramArguments</key>
     <array>
-        <string>~/Library/Application Support/com.katylavallee.wintracker/wintracker.py</string>
+        <string>/Users/{{USER}}/Library/Application Support/com.katylavallee.wintracker/wintracker.py</string>
         <string>1</string>
         <string>1</string>
     </array>
     <key>StandardErrorPath</key>
-    <string>~/Library/Logs/com.katylavallee.wintracker_err.log</string>
+    <string>Users/{{USER}}/Library/Logs/com.katylavallee.wintracker/wintracker_err.log</string>
     <key>StandardOutPath</key>
-    <string>~/Library/Logs/com.katylavallee.wintracker.log</string>
+    <string>Users/{{USER}}/Library/Logs/com.katylavallee.wintracker/wintracker.log</string>
     <key>StartInterval</key>
-    <integer>3</integer>
+    <integer>{{INTERVAL}}</integer>
+  </dict>
 </plist>

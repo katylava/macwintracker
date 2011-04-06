@@ -12,13 +12,15 @@ Installation
 
 Requires py-appscript and simplejson.
 
-$ git clone ... ~/Library/Application\ Support/com.katylavallee.wintracker
+    $ git clone ... ~/Library/Application\ Support/com.katylavallee.wintracker
+    $ cd <clone>
+    $ ./setup.sh <interval>
 
-# set StartInterval in the plist to the number of seconds you want between capturing frontmost window
+The active window will be logged every <interval> seconds.
+You can run setup.sh again to change it.
 
-$ cd ~/Library/LaunchAgents
-$ ln -s ~/Library/Application\ Support/com.katylavallee.wintracker/com.katylavallee.wintracker.plist
-$ launchctl load com.katylavallee.wintracker.plist
+To stop wintracker:
+    $ launchctl unload com.katylavallee.wintracker
 
 
 Consuming Output
