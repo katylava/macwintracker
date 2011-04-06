@@ -10,6 +10,11 @@
         <string>1</string>
         <string>1</string>
     </array>
+    <key>Environment Variables</key>
+    <dict>
+      <key>PYTHONPATH</key>
+      <string>{{PYTHONPATH}}</string>
+    </dict>
     <key>StandardErrorPath</key>
     <string>Users/{{USER}}/Library/Logs/com.katylavallee.wintracker/wintracker_err.log</string>
     <key>StandardOutPath</key>
