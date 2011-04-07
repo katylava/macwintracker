@@ -24,13 +24,16 @@ def log_frontmost():
     frontproc = SYSTEM_EVENTS.processes[its.frontmost == True][0]
     scriptable = frontproc.has_scripting_terminology()
     appname = frontproc.name()
+    data = {'ts':time.time(), 'appname':appname, 'window':appname, 'status':get_chat_status()}
     if scriptable:
         frontapp = app(frontproc.name())
         appname = frontapp.name()
-
-    data = {'ts':time.time(), 'appname':appname, 'window':appname, 'status':get_chat_status()}
-
-    if not scriptable: return data
+    else:
+        try:
+            data['window'] = ','.join(frontproc.windows.name())
+        except:
+            data['window'] = 'Unknown'
+        return data
 
     frontwin = None
     try:
