@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import time, sys, json
+from datetime import datetime
 from subprocess import Popen, PIPE
 from appscript import app, its
 
@@ -12,7 +13,7 @@ def watch(times=100, intvl=10):
             data = log_frontmost()
             print json.dumps(data)
         except Exception as e:
-            print >>sys.stderr, 'ERROR:', e
+            print >>sys.stderr, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), ' ERROR:', e
         try:
             time.sleep(intvl)
         except KeyboardInterrupt:
