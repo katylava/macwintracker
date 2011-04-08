@@ -50,7 +50,7 @@ def log_frontmost():
     if frontwin:
         data['window'] = frontwin.name()
 
-    if appname == 'Notational Velocity':
+    if appname in ['Notational Velocity','nvALT']:
         frontproc.menu_bars[0].menus['Edit'].menu_items['Copy URL'].click()
         data['url'] = get_clipboard_data()
 
