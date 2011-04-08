@@ -58,6 +58,13 @@ def log_frontmost():
     elif appname == 'Google Chrome':
         data['url'] = frontwin.active_tab().URL()
 
+    elif appname == 'Mailplane':
+        title = frontapp.currentTitle()
+        url = frontapp.currentURL()
+        if title.__str__() == 'k.missing_value':
+            title = None
+        data.update({'title':title,'url':url})
+
     elif appname == 'Microsoft Word':
         data['file'] = frontapp.active_document.path()
 
