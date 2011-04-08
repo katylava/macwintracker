@@ -7,7 +7,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/Users/{{USER}}/Library/Application Support/com.katylavallee.wintracker/wintracker.py</string>
-        <string>2</string>
+        <string>{{LIMIT}}</string>
         <string>{{INTERVAL}}</string>
     </array>
     <key>Environment Variables</key>
@@ -22,6 +22,6 @@
     <key>StandardOutPath</key>
     <string>/Users/{{USER}}/Library/Logs/com.katylavallee.wintracker/wintracker.log</string>
     <key>StartInterval</key>
-    <integer>{{INTERVAL}}</integer>
+    <integer>{{LAUNCHDINTVL}}</integer>
   </dict>
 </plist>
