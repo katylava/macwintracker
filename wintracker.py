@@ -83,6 +83,14 @@ def log_frontmost():
     elif appname == 'Terminal':
         data['process'] = frontwin.selected_tab.processes()[-1]
 
+    elif appname == 'iTunes':
+        data['state'] = frontapp.player_state().name.title()
+        if data['state'] != 'Stopped':
+            data['playlist'] = frontapp.current_playlist.name()
+
+    elif appname == 'Numbers':
+        data['file'] = frontwin.document.path()
+
     return data
 
 
