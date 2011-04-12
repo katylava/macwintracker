@@ -66,10 +66,10 @@ def log_frontmost():
         data.update({'title':title,'url':url})
 
     elif appname == 'Microsoft Word':
-        data['file'] = frontapp.active_document.path()
+        data['file'] = '%s:%s' % (frontapp.active_document.path(), data['window'])
 
     elif appname == 'Microsoft Excel':
-        data['file'] = frontapp.active_workbook.path()
+        data['file'] = '%s:%s' % (frontapp.active_workbook.path(), data['window'])
 
     elif appname == 'Microsoft PowerPoint':
         data['file'] = '%s:%s' % (frontapp.active_presentation.path(), data['window'])
