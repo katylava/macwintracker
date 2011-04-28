@@ -12,10 +12,13 @@ limit=$(($launchdIntvl/$intvl))
 cd "$(dirname $0)"
 [ ! -d "${dest}" ] && mkdir "${dest}"
 cp -f wintracker.py "${dest}/"
+cp -f uninstall.sh "${dest}/"
 cp -f $bid.plist ~/Library/LaunchAgents
+cp -f ${bid}LogRotate.plist ~/Library/LaunchAgents
 
 cd ~/Library/LaunchAgents
 sed -i "s/{{USER}}/$user/" $bid.plist
+sed -i "s/{{USER}}/$user/" ${bid}LogRotate.plist
 sed -i "s/{{LIMIT}}/$limit/" $bid.plist
 sed -i "s/{{LAUNCHDINTVL}}/$launchdIntvl/" $bid.plist
 sed -i "s/{{INTERVAL}}/$intvl/" $bid.plist
@@ -28,3 +31,4 @@ c\
 }" "${dest}/wintracker.py"
 
 launchctl load $bid.plist
+launchctl load ${bid}LogRotate.plist

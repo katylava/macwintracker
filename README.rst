@@ -12,8 +12,8 @@ Installation
 
 Install ::
 
-    $ git clone git://github.com/katylava/macwintracker.git ~/Library/Application\ Support/com.katylavallee.wintracker
-    $ cd ~/Library/Application\ Support/com.katylavallee.wintracker
+    $ git clone git://github.com/katylava/macwintracker.git
+    $ cd macwintracker
     $ ./setup.sh <interval>
 
 The active window will be logged every <interval> seconds.
@@ -21,7 +21,8 @@ You can run setup.sh again to change it.
 
 To stop wintracker ::
 
-    $ launchctl unload ~/Library/LaunchAgents/com.katylavallee.wintracker
+    $ cd ~/Library/Application\ Support/com.katylavallee.wintracker
+    $ ./uninstall.sh
 
 Requires appscript.
 
