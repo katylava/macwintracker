@@ -45,8 +45,6 @@ Future
 
 * Add a command-line utility which accepts a regular expression such as "^Project A.*" and a
   datetime range and outputs a duration.
-* Don't log duplicate lines (if performance won't suffer much for it)
-* Add a launchd log rotator
 
 
 Sample Output
