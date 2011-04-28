@@ -12,6 +12,7 @@ limit=$(($launchdIntvl/$intvl))
 cd "$(dirname $0)"
 [ ! -d "${dest}" ] && mkdir "${dest}"
 cp -f wintracker.py "${dest}/"
+cp -f jsonlogdedupe.py "${dest}/"
 cp -f uninstall.sh "${dest}/"
 cp -f $bid.plist ~/Library/LaunchAgents
 cp -f ${bid}LogRotate.plist ~/Library/LaunchAgents
@@ -29,6 +30,11 @@ sed -i "
 c\
 #!$pythex
 }" "${dest}/wintracker.py"
+sed -i "
+1 {
+c\
+#!$pythex
+}" "${dest}/jsonlogdedupe.py"
 
 launchctl load $bid.plist
 launchctl load ${bid}LogRotate.plist

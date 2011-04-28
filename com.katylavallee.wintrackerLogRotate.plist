@@ -8,6 +8,13 @@
     <array>
         <string>/Users/{{USER}}/Library/Application Support/com.katylavallee.wintracker/logrotate.sh</string>
     </array>
+    <key>Environment Variables</key>
+    <dict>
+      <key>PATH</key>
+      <string>{{PATH}}</string>
+      <key>PYTHONPATH</key>
+      <string>{{PYTHONPATH}}</string>
+    </dict>
     <key>Nice</key>
     <integer>1</integer>
     <key>StartCalendarInterval</key>
