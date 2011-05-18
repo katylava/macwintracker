@@ -99,6 +99,12 @@ def log_frontmost():
     elif appname == 'Numbers':
         data['file'] = frontwin.document.path()
 
+    elif appname == 'Skitch':
+        try:
+            data['title'] = frontproc.windows.text_fields.value()[0][0]
+        except:
+            pass
+
     return data
 
 
