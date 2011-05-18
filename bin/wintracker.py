@@ -25,28 +25,36 @@ def log_frontmost():
     frontproc = SYSTEM_EVENTS.processes[its.frontmost == True][0]
     scriptable = frontproc.has_scripting_terminology()
     appname = frontproc.name()
-    data = {'ts':time.time(), 'appname':appname, 'window':appname, 'status':get_chat_status()}
+    frontwin = None
+    data = {'ts':time.time(), 'appname':appname, 'window':'', 'status':get_chat_status()}
     if scriptable:
         frontapp = app(frontproc.name())
         appname = frontapp.name()
+        try:
+            frontwin = frontapp.active_window().pop()
+        except:
+            pass
+        if not frontwin:
+            try:
+                frontwin = frontapp.windows[its.index==1].pop()
+            except:
+                pass
+        if not frontwin:
+            try:
+                frontwin = frontapp.windows[its.frontmost==True].pop()
+            except:
+                pass
+        if not frontwin:
+            try:
+                frontwin = frontapp.windows().pop()
+            except:
+                pass
     else:
         try:
             data['window'] = ','.join(frontproc.windows.name())
         except:
-            data['window'] = 'Unknown'
-        return data
+            pass
 
-    frontwin = None
-    try:
-        frontwin = frontapp.active_window()[0].get()
-    except:
-        try:
-            frontwin = frontapp.windows[its.index==1][0].get()
-        except:
-            try:
-                frontwin = frontapp.windows[its.frontmost==True][0].get()
-            except:
-                pass
 
     if frontwin:
         data['window'] = frontwin.name()
