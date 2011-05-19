@@ -3,16 +3,12 @@
 import json
 
 def compare(x, y, ignore=[]):
+    a = x.copy()
+    b = y.copy()
     for k in ignore:
-        try:
-            x.pop(k)
-        except KeyError:
-            pass
-        try:
-            y.pop(k)
-        except KeyError:
-            pass
-    return x==y
+        a.pop(k, None)
+        b.pop(k, None)
+    return a==b
 
 
 if __name__ == '__main__':
