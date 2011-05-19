@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+SCRIPT_PATH=$(cd ${0%/*} && pwd -P)
+
 user=`whoami`
 bid='com.katylavallee.wintracker'
 dest=~/Library/Application\ Support/$bid
@@ -7,7 +9,8 @@ pypath=`python -c "from distutils.sysconfig import get_python_lib; print get_pyt
 pythex=`which python`
 [ -z $1 ] && intvl='3' || intvl=$1
 
-cd "$(dirname $0)"
+cd "${SCRIPT_PATH}"
+./bin/uninstall.sh
 [ ! -d "${dest}" ] && mkdir "${dest}"
 cp -f bin/* "${dest}/"
 cp -f launchagents/* ~/Library/LaunchAgents
@@ -29,8 +32,5 @@ c\
 }" "${dest}/jsonlogdedupe.py"
 
 
-
-cd "$(dirname $0)"
-./bin/uninstall.sh
 launchctl load $bid.plist
 launchctl load ${bid}LogRotate.plist
