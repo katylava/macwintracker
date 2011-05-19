@@ -51,12 +51,12 @@ def log_frontmost(resolution=10):
             pass
         if not frontwin:
             try:
-                frontwin = frontapp.windows[its.index==1].pop()
+                frontwin = frontapp.windows[its.index==1].get().pop()
             except:
                 pass
         if not frontwin:
             try:
-                frontwin = frontapp.windows[its.frontmost==True].pop()
+                frontwin = frontapp.windows[its.frontmost==True].get().pop()
             except:
                 pass
         if not frontwin:
