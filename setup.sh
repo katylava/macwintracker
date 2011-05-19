@@ -31,6 +31,6 @@ c\
 
 
 cd "$(dirname $0)"
-./uninstall.sh
+./bin/uninstall.sh
 launchctl load $bid.plist
 launchctl load ${bid}LogRotate.plist
