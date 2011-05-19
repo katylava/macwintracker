@@ -4,13 +4,16 @@ import time, sys, json
 from datetime import datetime
 from subprocess import Popen, PIPE
 from appscript import app, its
+from jsonlogdedupe import compare
 
-SYSTEM_EVENTS = app(id="com.apple.systemEvents")
 
-def watch(times=100, intvl=10):
-    for i in range(1, times):
+SYSTEM_EVENTS = lambda:app(id="com.apple.systemEvents")
+CURRENT_OBJECT = {}
+
+def watch(intvl=10):
+    while True:
         try:
-            data = log_frontmost()
+            data = log_frontmost(intvl)
             print json.dumps(data)
         except Exception as e:
             print >>sys.stderr, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), ' ERROR:', e
@@ -18,18 +21,27 @@ def watch(times=100, intvl=10):
             time.sleep(intvl)
         except KeyboardInterrupt:
             print 'done'
-            return
+            break
+    return 0
 
 
-def log_frontmost():
-    frontproc = SYSTEM_EVENTS.processes[its.frontmost == True][0]
+def log_frontmost(resolution=10):
+    frontproc = SYSTEM_EVENTS().processes[its.frontmost == True][0]
     scriptable = frontproc.has_scripting_terminology()
     appname = frontproc.name()
     frontwin = None
-    data = {'ts':time.time(), 'appname':appname, 'window':'', 'status':get_chat_status()}
+    ts = time.time()
+
+    data = {
+        'starttime': ts,
+        'endtime':   ts + resolution,
+        'appname':   appname,
+        'window':    '',
+        'status':    get_chat_status()
+    }
+
     if scriptable:
         frontapp = app(frontproc.name())
-        appname = frontapp.name()
         try:
             frontwin = frontapp.active_window().pop()
         except:
@@ -104,6 +116,12 @@ def log_frontmost():
             data['title'] = frontproc.windows.text_fields.value()[0][0]
         except:
             pass
+
+
+    global CURRENT_OBJECT
+    if compare(CURRENT_OBJECT, data, ['starttime','endtime']):
+        data['startime'] = CURRENT_OBJECT['starttime']
+    CURRENT_OBJECT = data
 
     return data
 
