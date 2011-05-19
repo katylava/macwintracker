@@ -7,8 +7,11 @@ from appscript import app, its
 from jsonlogdedupe import compare
 
 
-SYSTEM_EVENTS = lambda:app(id="com.apple.systemEvents")
 CURRENT_OBJECT = {}
+
+def sysevents():
+    # needs to be refreshed frequently, so get it fresh every time
+    return app(id="com.apple.systemEvents")
 
 def watch(intvl=10):
     while True:
@@ -26,15 +29,15 @@ def watch(intvl=10):
 
 
 def log_frontmost(resolution=10):
-    frontproc = SYSTEM_EVENTS().processes[its.frontmost == True][0]
+    frontproc = sysevents().processes[its.frontmost == True][0]
     scriptable = frontproc.has_scripting_terminology()
     appname = frontproc.name()
     frontwin = None
     ts = time.time()
 
     data = {
-        'starttime': ts,
-        'endtime':   ts + resolution,
+        'time_start': ts,
+        'time_end':   ts + resolution,
         'appname':   appname,
         'window':    '',
         'status':    get_chat_status()
@@ -119,15 +122,15 @@ def log_frontmost(resolution=10):
 
 
     global CURRENT_OBJECT
-    if compare(CURRENT_OBJECT, data, ['starttime','endtime']):
-        data['startime'] = CURRENT_OBJECT['starttime']
+    if compare(CURRENT_OBJECT, data, ['time_start','time_end']):
+        data['time_start'] = CURRENT_OBJECT['time_start']
     CURRENT_OBJECT = data
 
     return data
 
 
 def get_chat_status():
-    if 'Adium' in [p.name() for p in SYSTEM_EVENTS.processes()]:
+    if 'Adium' in [p.name() for p in sysevents().processes()]:
         status = app('Adium').global_status()
         message = status.status_message()
         title = status.title()
