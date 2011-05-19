@@ -66,7 +66,7 @@ def log_frontmost(resolution=10):
                 pass
     else:
         try:
-            data['window'] = ','.join(frontproc.windows.name())
+            data['window'] = ','.join([w for w in frontproc.windows.name() if isinstance(w, unicode)])
         except:
             pass
 
