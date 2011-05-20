@@ -24,10 +24,16 @@ if __name__ == '__main__':
 
     f = file(logfile, 'r')
     xline = f.next()
+    try:
+        xjson = json.loads(xline)
+    except ValueError:
+        # sometimes first line is incomplete due to log rotation
+        xline = f.next()
+        xjson = json.loads(xline)
+
     if options.match_first:
         print xline,
 
-    xjson = json.loads(xline)
     yjson = None
     for yline in f:
         try:
