@@ -137,7 +137,7 @@ def get_chat_status():
         stype = status.status_type().name.title()
         rettext = "%s (%s)" % (title, stype)
         if message and message != title:
-            rettext -  "%s -- %s" % (rettext, message)
+            rettext =  "%s -- %s" % (rettext, message)
         return rettext
     else:
         return None
