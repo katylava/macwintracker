@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+sed=/usr/bin/sed
+
 SCRIPT_PATH=$(cd ${0%/*} && pwd -P)
 
 user=`whoami`
@@ -16,18 +18,18 @@ cp -f bin/* "${dest}/"
 cp -f launchagents/* ~/Library/LaunchAgents
 
 cd ~/Library/LaunchAgents
-sed -i "s/{{USER}}/$user/" $bid*.plist
-sed -i "s:{{PATH}}:${PATH//\:/\\:}:" $bid*.plist
-sed -i "s:{{PYTHONPATH}}:$pypath:" $bid*.plist
-sed -i "s/{{INTERVAL}}/$intvl/" $bid.plist
-sed -i "
+$sed -i '' "s/{{USER}}/$user/" $bid*.plist
+$sed -i '' "s:{{PATH}}:${PATH//\:/\\:}:" $bid*.plist
+$sed -i '' "s:{{PYTHONPATH}}:$pypath:" $bid*.plist
+$sed -i '' "s/{{INTERVAL}}/$intvl/" $bid.plist
+$sed -i '' "
 1 {
-c\
+c\\
 #!$pythex
 }" "${dest}/wintracker.py"
-sed -i "
+$sed -i '' "
 1 {
-c\
+c\\
 #!$pythex
 }" "${dest}/jsonlogdedupe.py"
 
