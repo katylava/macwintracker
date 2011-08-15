@@ -74,11 +74,8 @@ def log_frontmost(resolution=10):
     if frontwin:
         data['window'] = frontwin.name()
 
-    #if appname in ['Notational Velocity','nvALT']:
-        #frontproc.menu_bars[0].menus['Edit'].menu_items['Copy URL'].click()
-        #data['url'] = get_clipboard_data()
 
-    elif appname == 'Google Chrome':
+    if appname == 'Google Chrome':
         data['url'] = frontwin.active_tab().URL()
 
     elif appname == 'Mailplane':
