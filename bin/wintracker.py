@@ -72,17 +72,15 @@ def log_frontmost(resolution=10):
 
 
     if frontwin:
-        data['window'] = frontwin.name()
+        data['window'] = normalize(frontwin.name())
 
 
     if appname == 'Google Chrome':
         data['url'] = frontwin.active_tab().URL()
 
     elif appname == 'Mailplane':
-        title = frontapp.currentTitle()
+        title = normalize(frontapp.currentTitle())
         url = frontapp.currentURL()
-        if title.__str__() == 'k.missing_value':
-            title = None
         data.update({'title':title,'url':url})
 
     elif appname == 'Microsoft Word':
@@ -145,6 +143,11 @@ def get_clipboard_data():
     retcode = p.wait()
     data = p.stdout.read()
     return data
+
+def normalize(result):
+    if result.__str__() == 'k.missing_value':
+        return None
+    return result
 
 
 if __name__ == '__main__':
