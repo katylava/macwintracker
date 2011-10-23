@@ -48,3 +48,5 @@ Future
 ======
 
 * Tools for parsing the log data... any ideas?
+* Instead of putting logic for all applications in wintracker.py, create a plugin system
+* Add parameters to setup script to allow user to configure log rotation interval
