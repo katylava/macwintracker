@@ -10,6 +10,8 @@ which you can parse however you pleaseth.
 Installation
 ============
 
+**Requires** `py-appscript <http://appscript.sourceforge.net/py-appscript/install.html>`_
+
 Install ::
 
     $ git clone git://github.com/katylava/macwintracker.git
@@ -23,8 +25,6 @@ To stop wintracker ::
 
     $ cd ~/Library/Application\ Support/com.katylavallee.wintracker
     $ ./uninstall.sh
-
-Requires appscript.
 
 
 How It Works
