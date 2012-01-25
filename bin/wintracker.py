@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import time, sys, json
 from datetime import datetime
@@ -145,7 +146,7 @@ def get_clipboard_data():
     return data
 
 def normalize(result):
-    if result.__str__() == 'k.missing_value':
+    if result.__repr__() == 'k.missing_value':
         return None
     return result
 
