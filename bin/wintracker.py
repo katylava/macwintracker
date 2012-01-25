@@ -18,9 +18,17 @@ def watch(intvl=10):
     while True:
         try:
             data = log_frontmost(intvl)
-            print json.dumps(data)
         except Exception as e:
-            print >>sys.stderr, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), ' ERROR:', e
+            import traceback
+            sys.stderr.write(
+                "\n{}\n".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            )
+            traceback.print_exc()
+        else:
+            line = json.dumps(data, ensure_ascii=False) # line is unicode
+            sys.stdout.write("\n")
+            sys.stdout.write(line.encode('utf-8'))
+
         try:
             time.sleep(intvl)
         except KeyboardInterrupt:
