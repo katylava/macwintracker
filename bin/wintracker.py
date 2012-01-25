@@ -110,6 +110,15 @@ def log_frontmost(resolution=10):
     elif appname == 'Terminal':
         data['process'] = frontwin.selected_tab.processes()[-1]
 
+    elif appname == 'iTerm':
+        win = frontapp.current_terminal.current_session.name()
+        data['window'] = win
+        # can't get processs like you can in terminal, so try to get
+        # it from session name
+        parts = win.rpartition('(')
+        if parts[-2] == '(':
+            data['process'] = parts[-1][:-1] # to remove closing paren
+
     elif appname == 'iTunes':
         data['state'] = frontapp.player_state().name.title()
         if data['state'] != 'Stopped':
