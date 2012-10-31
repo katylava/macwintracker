@@ -133,6 +133,9 @@ def log_frontmost(resolution=10):
         except:
             pass
 
+    elif appname == 'FluidApp':
+        data['window'] = frontproc.displayed_name()
+
 
     global CURRENT_OBJECT
     if compare(CURRENT_OBJECT, data, ['time_start','time_end']):
