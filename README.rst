@@ -1,3 +1,5 @@
+*Note: No longer developed because http://appscript.sourceforge.net/status.html*
+
 Description
 ===========
 
